@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="test1"></div>
+    <div id="test2"></div>
+
+    <script type="text/javascript" src="../lib/react.development.js"></script>
+    <script type="text/javascript" src="../lib/react-dom.development.js"></script>
+    <script type="text/javascript" src="../lib/prop-types.min.js"></script>
+    <script type="text/javascript" src="../lib/babel.min.js"></script>
+    <script type="text/babel">
+      /* 需求：自定义一个组件，功能说明如下
+
+        1、界面如页面所示
+        2、点击按钮，提示第一个输入框中的值
+        3、当第二个输入框失去焦点时，提示这个输入框中的值
+      */
+      class InputDispaly extends React.Component {
+        constructor(props) {
+          super(props);
+          this.clickHandler = this.clickHandler.bind(this)
+          this.clickHandler1 = this.clickHandler1.bind(this)
+        }
+        
+        clickHandler(){
+          let val = this.refs.value1.value
+          alert(val)
+        }
+        clickHandler1(){
+          alert(this.input.value)
+        }
+        blurHandler(event){
+          alert(event.target.value)
+          console.log(event.target.value);
+        }
+        render() {
+          return (
+            <div>
+              <input ref='value1' placeholder='输入第一个值' />
+              <button onClick={this.clickHandler}>显示</button>
+              <input placeholder='输入第二个值' ref={ input => this.input = input } />
+              <button onClick={this.clickHandler1}>显示</button>
+              <input onBlur={this.blurHandler} placeholder='输入第三个值'></input>
+            </div>
+            
+          )
+        }
+      }
+      
+      ReactDOM.render(<InputDispaly />, document.getElementById('test1'))
+
+      
+    </script>
+  </body>
+</html>

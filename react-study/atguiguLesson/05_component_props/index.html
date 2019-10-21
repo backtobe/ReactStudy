@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="test1"></div>
+    <div id="test2"></div>
+
+    <script type="text/javascript" src="../lib/react.development.js"></script>
+    <script type="text/javascript" src="../lib/react-dom.development.js"></script>
+    <script type="text/javascript" src="../lib/prop-types.min.js"></script>
+    <script type="text/javascript" src="../lib/babel.min.js"></script>
+    <script type="text/babel">
+      /* 需求：自定义用来显示一个人员信息的组件，效果如下面，说明
+
+        1、如果性别没有指定，默认为男
+        2、如果年龄没有指定，默认为18
+      */
+      // 1、定义组件 工厂函数形式
+      // function Person(props){
+      //   const {person} = props
+      //   return (
+      //     <ul>
+      //       <li>姓名：{person.name}</li>  
+      //       <li>年龄：{person.age}</li>  
+      //       <li>性别：{person.sex}</li>  
+      //     </ul>
+      //   )
+      // }
+      //  2.class类型
+      class Person extends React.Component {
+        render(){
+          console.log(this.props);
+          return (
+            <ul>
+              <li>姓名：{this.props.name}</li>
+              <li>年龄：{this.props.age}</li>
+              <li>性别：{this.props.sex}</li>
+            </ul> 
+          )
+        }
+      }
+      // 指定属性默认值 只需要指定最后一级的属性默认值
+      Person.defaultProps = {
+        sex:'男',
+        age:18
+      }
+      
+      Person.propTypes = {
+        name:PropTypes.string.isRequired,
+        sex:PropTypes.string,
+        age:PropTypes.number
+      }
+
+      // 2、渲染组件标签
+      const p1 = {
+        name:'Tom',
+        age:20,
+        sex:'女'
+      }
+      const p2 = {
+        // name:'Jack',
+        age:'23',
+      }
+      ReactDOM.render(<Person  name={p1.name} age={p1.age} sex={p1.sex}/>,document.getElementById('test1'))
+      ReactDOM.render(<Person  {...p2}/>,document.getElementById('test2'))
+    </script>
+  </body>
+</html>

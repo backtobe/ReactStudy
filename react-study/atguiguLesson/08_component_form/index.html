@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="test1"></div>
+    <div id="test2"></div>
+
+    <script type="text/javascript" src="../lib/react.development.js"></script>
+    <script
+      type="text/javascript"
+      src="../lib/react-dom.development.js"
+    ></script>
+    <script type="text/javascript" src="../lib/prop-types.min.js"></script>
+    <script type="text/javascript" src="../lib/babel.min.js"></script>
+    <script type="text/babel">
+      /* 需求：自定义包含表单的组件
+        1、界面如下所示
+        2、输入用户名密码后，点击登录提示输入信息
+        3、不提交表单
+      */
+
+      class LoginForm extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            pwd:''
+          }
+          this.submitHandler = this.submitHandler.bind(this);
+          this.changeHandler = this.changeHandler.bind(this);
+        }
+        submitHandler(event){
+          event.preventDefault();
+          let userName = this.userName.value.trim();
+          let passWord = this.state.pwd.trim();
+          if(!userName || !passWord){
+            return
+          }
+          alert(userName,passWord)
+        }
+        changeHandler(event){
+          let pwd = event.target.value.trim()
+          this.setState({pwd})
+        }
+
+        render() {
+          return (
+            <div>
+            <form action="/test" onSubmit={this.submitHandler}>
+              <label>
+                用户名：
+              </label>
+              <input type="text" ref={input => this.userName = input}/>
+              <label>
+                密码：
+              </label>
+              <input type="password" value={this.state.pwd} onChange={this.changeHandler}/>  
+              <input type="submit" value="登录"/>
+            </form>
+            </div>
+          )
+        }
+      }
+      ReactDOM.render(<LoginForm />,document.getElementById('test1'))
+    </script>
+  </body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="test1"></div>
+    <div id="test2"></div>
+
+    <script type="text/javascript" src="../lib/react.development.js"></script>
+    <script type="text/javascript" src="../lib/react-dom.development.js"></script>
+    <script type="text/javascript" src="../lib/babel.min.js"></script>
+    <script type="text/babel">
+      /* 需求：自定义组件，功能说明
+        1、显示h2标题，初始文本为：我喜欢你
+        2、点击标题更新为：我喜欢你
+      */
+      class MyH2 extends React.Component {
+        constructor (props) {
+          super(props)
+          // 初始化状态
+          this.state = {
+            isLikeMe:false
+          }
+          // 将新增方法中的this强制绑定为组件对象
+          this.changeState = this.changeState.bind(this)
+        }
+        // 新增方法内部的this默认不是组件对象，而是undefined
+        changeState(){
+          let { isLikeMe } = this.state;
+          isLikeMe = !isLikeMe;
+          this.setState({ isLikeMe });
+        }
+        render() {
+          //读取状态
+          // const isLike = this.state.isLikeMe
+          const { isLikeMe } = this.state
+          return (<h2 onClick={this.changeState}>{isLikeMe ?"你喜欢我":"我喜欢你"}</h2>)
+        }
+      }
+
+      ReactDOM.render(<MyH2 />, document.getElementById('test1')  )
+
+    </script>
+  </body>
+</html>

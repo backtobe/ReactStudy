@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="test1"></div>
+    <div id="test2"></div>
+
+    <script type="text/javascript" src="../lib/react.development.js"></script>
+    <script
+      type="text/javascript"
+      src="../lib/react-dom.development.js"
+    ></script>
+    <script type="text/javascript" src="../lib/prop-types.min.js"></script>
+    <script type="text/javascript" src="../lib/babel.min.js"></script>
+    <script type="text/babel">
+      /* 需求：组件实现此功能
+
+        1、显示所有TODO列表
+        2、输入文本，点击按钮添加到列表中
+      */
+      class App extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            todoList: ['吃饭', '睡觉']
+          };
+          this.addToDO = this.addToDO.bind(this);
+        }
+        addToDO(todo) {
+          let { todoList } = this.state;
+          todoList.unshift(todo);
+          this.setState({ todoList });
+        }
+        render() {
+          return (
+            <div>
+              <h2>待办列表</h2>
+              <TodoAdd addToDO={this.addToDO} length={this.state.todoList.length}></TodoAdd>
+              <TodoList
+                todoList={this.state.todoList}
+              ></TodoList>
+            </div>
+          );
+        }
+      }
+      class TodoAdd extends React.Component {
+        constructor(props) {
+          super(props);
+          this.clickAdd = this.clickAdd.bind(this);
+        }
+        clickAdd() {
+          let todo = this.input.value.trim();
+          this.input.value = '';
+          if (!todo.length) {
+            alert('待办事项不能为空！');
+            return;
+          }
+          this.props.addToDO(todo);
+        }
+        render() {
+          return (
+            <div className='add-container'>
+              <input ref={input => (this.input = input)} className='' />
+              <button className='add-button' onClick={this.clickAdd}>
+                添加#{this.props.length + 1}
+              </button>
+            </div>
+          );
+        }
+      }
+
+      class TodoList extends React.Component {
+        constructor(props) {
+          super(props);
+        }
+        render() {
+          let { todoList } = this.props;
+          return (
+            <ul>
+              {todoList.map((item, index) => {
+                return (
+                  <li key={index}>
+                    {item}
+                  </li>
+                );
+              })}
+            </ul>
+          );
+        }
+      }
+      ReactDOM.render(<App />, document.getElementById('test1'));
+    </script>
+  </body>
+</html>
