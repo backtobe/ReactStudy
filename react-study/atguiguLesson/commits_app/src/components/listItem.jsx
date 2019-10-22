@@ -1,15 +1,25 @@
 import React, { Component } from 'react'
+import './style/listItem.css'
 
 class Item extends Component {
+  constructor(props) {
+    super(props)
+    this.itemDelete= this.itemDelete.bind(this)
+  }
+  itemDelete(){
+    this.props.passDelete(this.props.index)
+  }
   render(){
+    let {comment} = this.props
     return (
-      <div>
+      <div className="itemself-container">
+        
         <div className="item-top">
-          <p>xxx 说：</p>
-          <button>删除</button>  
+          <p>{comment.name} 说：</p>
+          <button onClick={this.itemDelete}>删除</button>  
         </div>
         <div className="item-body">
-          React真不错
+          {comment.comment}
         </div>
       </div>
     )
