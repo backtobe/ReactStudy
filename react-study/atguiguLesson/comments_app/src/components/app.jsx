@@ -17,7 +17,7 @@ class App extends Component {
   }
   addComment(comment){
     let {comments} = this.state
-    comments.push(comment)
+    comments.unshift(comment)
     this.setState({comments})
   }
   deleteComment(index){
