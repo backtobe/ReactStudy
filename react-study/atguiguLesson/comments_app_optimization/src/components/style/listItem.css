@@ -1,0 +1,24 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+.itemself-container {
+  padding: 1vh;
+  width: 98%;
+  border-bottom: 1px solid lightgrey;
+}
+.itemself-container .item-top {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 1vh;
+}
+.itemself-container .item-top button {
+  width: 6vw;
+  height: 4vh;
+  border: 1px solid lightgrey;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.itemself-container .item-body {
+  margin-left: 4vw;
+}
